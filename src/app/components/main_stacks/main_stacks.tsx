@@ -17,8 +17,8 @@ export function MainStacks() {
 
 
   return (
-    <div className='main-stacks-container'>
-      <div className='main-stacks-container-header'>
+    <div className='global'>
+      <div className='global-header'>
         <h2>Principais Stacks</h2>
       </div>
       <div className='mini-cards-container'>

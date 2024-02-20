@@ -1,5 +1,3 @@
-import './styles.sass'
-
 type CardProps = {
   title: String,
   description: String,
@@ -8,8 +6,8 @@ type CardProps = {
 
 export function Card(props: CardProps) {
   return (
-    <div className="card-container">
-      <div className="card-container-header">
+    <div className="global">
+      <div className="global-header">
         <h2>{props.title}</h2>
       </div>
       <p>{props.description}</p>

@@ -2,52 +2,60 @@
 import './styles.sass'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
-
 import Image from 'next/image'
-import slide1 from '../../../assets/slide1.png'
+import { RepositoryType } from '@/app/api/github/repositories/mapper'
 
+interface ProjectsComponentProps {
+  repositories: RepositoryType[]
+}
 
-export function ProjectsComponent() {
-
+export function ProjectsComponent({ repositories }: ProjectsComponentProps) {
   const [sliderRef, instanceRef] = useKeenSlider(
     {
+      loop: true,
+      slides: {
+        spacing: 15,
+      },
       slideChanged() {
         console.log('slide changed')
       },
     },
     [
       // add plugins here
-    ]
+    ],
   )
 
-
   return (
-    <div className='projects-container'>
-      <div className='projects-container-header'>
+    <div className="global">
+      <div className="global-header">
         <h2>Projetos</h2>
       </div>
 
       <div ref={sliderRef} className="keen-slider">
-        <div className="keen-slider__slide">
-          <Image src={slide1} width={355} alt='slide 1' />
-          <button>Projeto</button>
-          <p className='project-description'>Aplicação web para agendamento de horários onde é possível reservar uma url personalizada e compartilhar seu calendário personalizado com sua disponibilidade de horários diários para reservas integrado com o Google Calendar </p>
-        </div>
+        {repositories.map((repo) => {
+          console.log(repo)
 
-        <div className="keen-slider__slide">
-          <Image src={slide1} width={355} alt='slide 1' />
-          <button>Projeto</button>
-          <p className='project-description'>Aplicação web para agendamento de horários onde é possível reservar uma url personalizada e compartilhar seu calendário personalizado com sua disponibilidade de horários diários para reservas integrado com o Google Calendar </p>
-        </div>
+          return (
+            <div key={repo.description} className="keen-slider__slide">
+              <div className="image">
+                <Image
+                  quality={100}
+                  width={1900}
+                  height={955}
+                  src={`${repo.imageUrl}`}
+                  alt="project image"
+                />
+              </div>
 
-        <div className="keen-slider__slide">
-          <Image src={slide1} width={355} alt='slide 1' />
-          <button>Projeto</button>
-          <p className='project-description'>Aplicação web para agendamento de horários onde é possível reservar uma url personalizada e compartilhar seu calendário personalizado com sua disponibilidade de horários diários para reservas integrado com o Google Calendar </p>
-        </div>
+              <a href={repo.url} rel="external" target="_blank">
+                {repo.name}
+              </a>
 
+              <p className="project-description">{repo.description}</p>
+            </div>
+          )
+        })}
       </div>
-
     </div>
   )
 }
